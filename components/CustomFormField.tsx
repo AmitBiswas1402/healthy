@@ -13,23 +13,39 @@ import { Control } from "react-hook-form";
 import { FormFieldType } from "./forms/PatientForm";
 
 interface CustomProps {
-    control: Control<any>
-    fieldType: FormFieldType
+  control: Control<any>;
+  name: string;
+  label?: string;
+  placeholder?: string;
+  iconSrc?: string;
+  iconAlt?: string;
+  disabled?: boolean;
+  dateFormat?: string;
+  showTimeSelect?: boolean;
+  children?: React.ReactNode;
+  renderSkeleton?: (field: any) => React.ReactNode;
+  fieldType: FormFieldType;
 }
 
-const CustomFormField = ({control, fieldType, name}: CustomProps) => {
+const renderInput = () => {
+  return (
+    <Input
+      type="text" 
+      placeholder="Your name"
+    />
+  )
+}
+
+const CustomFormField = ({control, fieldType, name, label}: CustomProps) => {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>Username</FormLabel>
-          <FormControl>
-            <Input placeholder="shadcn" {...field} />
-          </FormControl>
-          <FormDescription>This is your public display name.</FormDescription>
-          <FormMessage />
+        <FormItem className="flex-1">
+          {fieldType !== FormFieldType.CHECKBOX && label && (
+            <FormLabel>{label}</FormLabel>
+          )}
         </FormItem>
       )}
     />
